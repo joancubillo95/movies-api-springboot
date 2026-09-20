@@ -1,3 +1,5 @@
 spring:
   application:
     name: MoviesApi
+  datasource:
+    url: ${PG_DB_URL}
