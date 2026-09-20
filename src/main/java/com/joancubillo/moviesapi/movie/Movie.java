@@ -1,6 +1,10 @@
 package com.joancubillo.moviesapi.movie;
 
+import com.joancubillo.moviesapi.genre.Genre;
 import jakarta.persistence.*;
+
+import java.util.List;
+import java.util.UUID;
 
 @Entity
 @Table(name = "movie")
@@ -8,7 +12,7 @@ public class Movie {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    private String id;
+    private UUID id;
 
     private String title;
     private int year;
@@ -17,10 +21,18 @@ public class Movie {
     private String poster;
     private double rate;
 
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "movie_genres",
+            joinColumns = @JoinColumn(name = "movie_id"),
+            inverseJoinColumns = @JoinColumn(name = "genre_id")
+    )
+    private List<Genre> genres;
+
     public Movie() {
     }
 
-    public Movie(String id, String title, int year, String director, int duration, String poster, double rate) {
+    public Movie(UUID id, String title, int year, String director, int duration, String poster, double rate, List<Genre> genres) {
         this.id = id;
         this.title = title;
         this.year = year;
@@ -28,13 +40,14 @@ public class Movie {
         this.duration = duration;
         this.poster = poster;
         this.rate = rate;
+        this.genres = genres;
     }
 
-    public String getId() {
+    public UUID getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 
@@ -84,5 +97,13 @@ public class Movie {
 
     public void setRate(double rate) {
         this.rate = rate;
+    }
+
+    public List<Genre> getGenres() {
+        return genres;
+    }
+
+    public void setGenres(List<Genre> genres) {
+        this.genres = genres;
     }
 }

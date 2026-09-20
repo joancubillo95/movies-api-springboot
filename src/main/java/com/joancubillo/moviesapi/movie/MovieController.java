@@ -14,6 +14,7 @@ public class MovieController {
 
     @GetMapping("/getAll")
     public List<Movie> hello(){
+        List<Movie> response = movieRepository.findAll();
         return movieRepository.findAll();
     }
 }
