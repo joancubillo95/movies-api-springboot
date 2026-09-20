@@ -1,3 +1,5 @@
 spring:
   application:
     name: MoviesApi
+  datasource:
+    url: ${DB_URL}
